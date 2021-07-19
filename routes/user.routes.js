@@ -53,7 +53,7 @@ router.post("/login", async (req, res, next) => {
       return res.status(200).json(loginResult);
     } else {
       // O status 401 significa Unauthorized
-      return res.status(401).json({ error: "Acesso negado." });
+      return res.status(401).json({ error: "Usuário ou senha errado." });
     }
   } catch (err) {
     next(err);

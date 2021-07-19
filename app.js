@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 
 const connectToDb = require("./config/db.config");
 const userRouter = require("./routes/user.routes");
@@ -7,6 +8,8 @@ const userRouter = require("./routes/user.routes");
 const app = express();
 
 app.use(express.json());
+// CORS (Cross-Origin-Resource-Sharing) é um mecanismo de proteção do servidor que só aceita requisições do mesmo domínio. Para aceitarmos requisições de domínios diferentes, precisamos da configuração abaixo:
+app.use(cors({ origin: "http://localhost:3000" }));
 
 async function init() {
   try {
@@ -17,8 +20,9 @@ async function init() {
     app.use("/", userRouter);
 
     app.use((err, req, res) => {
+      console.log(error);
       if (err) {
-        return res.status(500).json({ error: err });
+        return res.status(500).json({ error: err.message });
       }
     });
 
